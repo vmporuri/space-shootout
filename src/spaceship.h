@@ -1,9 +1,9 @@
 #pragma once
 
-const auto sizeX = 30;
-const auto sizeY = 30;
-const auto speedX = 5;
-const auto speedY = 5;
+const auto shipWidth = 60;
+const auto shipHeight = 60;
+const auto shipSpeedX = 10;
+const auto shipSpeedY = 10;
 
 class Spaceship {
   private:
