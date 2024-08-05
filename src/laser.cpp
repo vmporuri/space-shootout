@@ -1,7 +1,8 @@
 #include "laser.h"
+
 #include "raylib.h"
 
-Laser::Laser(int posX, int posY) : m_posX{posX}, m_posY{posY} {}
+Laser::Laser(int posX, int posY) : m_posX { posX }, m_posY { posY } {}
 
 void Laser::draw() const {
     DrawRectangle(m_posX, m_posY, laserWidth, laserHeight, WHITE);

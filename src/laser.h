@@ -1,8 +1,8 @@
 #pragma once
 
-const auto laserWidth = 8;
-const auto laserHeight = 30;
-const auto laserSpeedY = 30;
+const auto laserWidth { 8 };
+const auto laserHeight { 30 };
+const auto laserSpeedY { 30 };
 
 class Laser {
   private:

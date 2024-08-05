@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <optional>
 
-Spaceship::Spaceship(int posX, int posY) : m_posX{posX}, m_posY{posY} {}
+Spaceship::Spaceship(int posX, int posY) : m_posX { posX }, m_posY { posY } {}
 
 void Spaceship::draw() const {
     DrawRectangle(m_posX, m_posY, shipWidth, shipHeight, WHITE);
@@ -27,7 +27,7 @@ void Spaceship::move() {
 
 [[nodiscard]] std::optional<Laser> Spaceship::blast() const {
     if (IsKeyPressed(KEY_SPACE)) {
-        return Laser{m_posX + shipWidth / 2, m_posY + shipHeight / 2};
+        return Laser { m_posX + shipWidth / 2, m_posY + shipHeight / 2 };
     }
     return std::nullopt;
 }
