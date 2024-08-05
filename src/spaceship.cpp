@@ -1,6 +1,8 @@
 #include "spaceship.h"
+#include "laser.h"
 #include "raylib.h"
 #include <algorithm>
+#include <optional>
 
 Spaceship::Spaceship(int posX, int posY) : m_posX{posX}, m_posY{posY} {}
 
@@ -21,4 +23,11 @@ void Spaceship::move() {
     if (IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT)) {
         m_posX = std::min(m_posX + shipSpeedX, GetScreenWidth() - shipWidth);
     }
+}
+
+[[nodiscard]] std::optional<Laser> Spaceship::blast() const {
+    if (IsKeyPressed(KEY_SPACE)) {
+        return Laser{m_posX + shipWidth / 2, m_posY + shipHeight / 2};
+    }
+    return std::nullopt;
 }

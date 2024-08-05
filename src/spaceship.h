@@ -1,4 +1,6 @@
 #pragma once
+#include "laser.h"
+#include <optional>
 
 const auto shipWidth = 60;
 const auto shipHeight = 60;
@@ -14,4 +16,5 @@ class Spaceship {
     Spaceship(int posX, int posY);
     void draw() const;
     void move();
+    [[nodiscard]] std::optional<Laser> blast() const;
 };
