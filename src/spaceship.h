@@ -1,4 +1,5 @@
 #pragma once
+
 #include "laser.h"
 #include <optional>
 
