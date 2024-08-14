@@ -1,5 +1,5 @@
-#include "game.h"
 #include "raylib.h"
+#include "state-machine.h"
 
 const auto title { "Space Shootout" };
 const auto screenWidth { 960 };
@@ -11,12 +11,16 @@ int main() {
     SetTargetFPS(fps);
     HideCursor();
 
-    Game game {};
+    StateMachine smm {};
 
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(BLACK);
-        game.updateOneTick();
+
+        GameState::State newState { smm.update() };
+        smm.render();
+        smm.changeState(newState);
+
         EndDrawing();
     }
 
