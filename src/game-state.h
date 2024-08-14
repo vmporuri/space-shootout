@@ -4,7 +4,8 @@ class GameState {
   public:
     enum State {
         TITLE_SCREEN = 0,
-        GAME = 1,
+        LOADING_SCREEN = 1,
+        GAME = 2,
     };
 
     GameState() = default;

@@ -4,14 +4,16 @@
 
 GameState::State TitleScreen::update() {
     if (IsKeyPressed(KEY_SPACE)) {
-        return GameState::GAME;
+        return GameState::LOADING_SCREEN;
     }
     return m_stateType;
 }
 
 void TitleScreen::render() {
-    DrawText(g_gameTitle, GetScreenWidth() / 6, GetScreenHeight() / 3,
-             g_titleFontSize, WHITE);
-    DrawText(g_gameSubtitle, GetScreenWidth() / 4, 2 * GetScreenHeight() / 3,
-             g_subtitleFontSize, WHITE);
+    int titleWidth { MeasureText(g_gameTitle, g_titleFontSize) };
+    int subtitleWidth { MeasureText(g_gameSubtitle, g_subtitleFontSize) };
+    DrawText(g_gameTitle, (GetScreenWidth() - titleWidth) / 2,
+             GetScreenHeight() / 3, g_titleFontSize, WHITE);
+    DrawText(g_gameSubtitle, (GetScreenWidth() - subtitleWidth) / 2,
+             2 * GetScreenHeight() / 3, g_subtitleFontSize, WHITE);
 }
