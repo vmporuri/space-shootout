@@ -11,18 +11,8 @@ int main() {
     SetTargetFPS(fps);
     HideCursor();
 
-    StateMachine smm {};
-
-    while (!WindowShouldClose()) {
-        BeginDrawing();
-        ClearBackground(BLACK);
-
-        GameState::State newState { smm.update() };
-        smm.render();
-        smm.changeState(newState);
-
-        EndDrawing();
-    }
+    StateMachine gameStateMachine {};
+    gameStateMachine.runGameLoop();
 
     CloseWindow();
     return 0;

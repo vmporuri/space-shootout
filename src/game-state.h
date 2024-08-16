@@ -1,13 +1,8 @@
 #pragma once
 
+#include <memory>
 class GameState {
   public:
-    enum State {
-        TITLE_SCREEN = 0,
-        LOADING_SCREEN = 1,
-        GAME = 2,
-    };
-
     GameState() = default;
     GameState(const GameState &) = default;
     GameState(GameState &&) = delete;
@@ -15,6 +10,6 @@ class GameState {
     virtual GameState &operator=(GameState &&) = delete;
     virtual ~GameState() = default;
 
-    virtual State update() { return State {}; }
+    virtual std::unique_ptr<GameState> update() { return { nullptr }; }
     virtual void render() {}
 };

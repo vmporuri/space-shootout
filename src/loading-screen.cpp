@@ -1,16 +1,15 @@
 #include "loading-screen.h"
 #include "game-state.h"
+#include "game.h"
 #include "raylib.h"
+#include "text-screen.h"
+#include <memory>
 
-GameState::State LoadingScreen::update() {
+LoadingScreen::LoadingScreen() : TextScreen { g_loadingText } {}
+
+std::unique_ptr<GameState> LoadingScreen::update() {
     if (IsKeyPressed(KEY_SPACE)) {
-        return GameState::GAME;
+        return std::make_unique<Game>();
     }
-    return m_stateType;
-}
-
-void LoadingScreen::render() {
-    int loadingTextWidth { MeasureText(g_loadingText, g_loadingFontSize) };
-    DrawText(g_loadingText, (GetScreenWidth() - loadingTextWidth) / 2,
-             GetScreenHeight() / 2, g_loadingFontSize, WHITE);
+    return std::unique_ptr<GameState> {};
 }

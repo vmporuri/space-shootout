@@ -1,15 +1,12 @@
 #pragma once
 
-#include "game-state.h"
+#include "text-screen.h"
+#include <memory>
 
 const auto g_loadingText { "Searching for Opponent..." };
-const auto g_loadingFontSize { 40 };
 
-class LoadingScreen : public GameState {
-  private:
-    State m_stateType { LOADING_SCREEN };
-
+class LoadingScreen : public TextScreen {
   public:
-    State update() override;
-    void render() override;
+    LoadingScreen();
+    std::unique_ptr<GameState> update() override;
 };

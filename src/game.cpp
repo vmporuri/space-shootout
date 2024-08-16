@@ -3,18 +3,19 @@
 #include "laser.h"
 #include "raylib.h"
 #include "spaceship.h"
+#include <memory>
 #include <optional>
 #include <vector>
 
 Game::Game() : m_player { GetScreenWidth() / 2, GetScreenHeight() / 2 } {}
 
-GameState::State Game::update() {
+std::unique_ptr<GameState> Game::update() {
     m_player.move();
     std::optional<Laser> blast { m_player.blast() };
     if (blast) {
         m_outgoingLasers.push_back(*blast);
     }
-    return m_stateType;
+    return std::unique_ptr<GameState> {};
 }
 
 void Game::render() {

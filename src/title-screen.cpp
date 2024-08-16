@@ -1,12 +1,15 @@
 #include "title-screen.h"
-#include "game-state.h"
+#include "loading-screen.h"
 #include "raylib.h"
+#include <memory>
 
-GameState::State TitleScreen::update() {
+TitleScreen::TitleScreen() : TextScreen { g_loadingText } {}
+
+std::unique_ptr<GameState> TitleScreen::update() {
     if (IsKeyPressed(KEY_SPACE)) {
-        return GameState::LOADING_SCREEN;
+        return std::make_unique<LoadingScreen>();
     }
-    return m_stateType;
+    return std::unique_ptr<GameState> {};
 }
 
 void TitleScreen::render() {
