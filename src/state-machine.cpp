@@ -1,5 +1,6 @@
 #include "state-machine.h"
 #include "game-state.h"
+#include "raylib.h"
 #include "title-screen.h"
 #include <memory>
 

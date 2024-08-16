@@ -3,8 +3,6 @@
 #include "raylib.h"
 #include <memory>
 
-TitleScreen::TitleScreen() : TextScreen { g_loadingText } {}
-
 std::unique_ptr<GameState> TitleScreen::update() {
     if (IsKeyPressed(KEY_SPACE)) {
         return std::make_unique<LoadingScreen>();
@@ -13,10 +11,10 @@ std::unique_ptr<GameState> TitleScreen::update() {
 }
 
 void TitleScreen::render() {
-    int titleWidth { MeasureText(g_gameTitle, g_titleFontSize) };
-    int subtitleWidth { MeasureText(g_gameSubtitle, g_subtitleFontSize) };
-    DrawText(g_gameTitle, (GetScreenWidth() - titleWidth) / 2,
-             GetScreenHeight() / 3, g_titleFontSize, WHITE);
-    DrawText(g_gameSubtitle, (GetScreenWidth() - subtitleWidth) / 2,
-             2 * GetScreenHeight() / 3, g_subtitleFontSize, WHITE);
+    int titleWidth { MeasureText(s_gameTitle, s_titleFontSize) };
+    int subtitleWidth { MeasureText(s_gameSubtitle, s_subtitleFontSize) };
+    DrawText(s_gameTitle, (GetScreenWidth() - titleWidth) / 2,
+             GetScreenHeight() / 3, s_titleFontSize, WHITE);
+    DrawText(s_gameSubtitle, (GetScreenWidth() - subtitleWidth) / 2,
+             2 * GetScreenHeight() / 3, s_subtitleFontSize, WHITE);
 }

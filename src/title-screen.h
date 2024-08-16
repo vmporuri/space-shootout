@@ -3,14 +3,15 @@
 #include "text-screen.h"
 #include <memory>
 
-const auto g_gameTitle { "Space Shootout" };
-const auto g_gameSubtitle { "Press Space to Start" };
-const auto g_titleFontSize { 80 };
-const auto g_subtitleFontSize { 40 };
-
 class TitleScreen : public TextScreen {
+  private:
+    static constexpr auto s_gameTitle { "Space Shootout" };
+    static constexpr auto s_gameSubtitle { "Press Space to Start" };
+    static constexpr auto s_titleFontSize { 80 };
+    static constexpr auto s_subtitleFontSize { 40 };
+
   public:
-    TitleScreen();
+    TitleScreen() = default;
     std::unique_ptr<GameState> update() override;
     void render() override;
 };

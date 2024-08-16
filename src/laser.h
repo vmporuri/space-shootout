@@ -1,11 +1,11 @@
 #pragma once
 
-const auto laserWidth { 8 };
-const auto laserHeight { 30 };
-const auto laserSpeedY { 30 };
-
 class Laser {
   private:
+    static constexpr auto s_laserWidth { 8 };
+    static constexpr auto s_laserHeight { 30 };
+    static constexpr auto s_laserSpeedY { 30 };
+
     int m_posX;
     int m_posY;
 

@@ -1,14 +1,14 @@
 #include "raylib.h"
 #include "state-machine.h"
 
-const auto title { "Space Shootout" };
-const auto screenWidth { 960 };
-const auto screenHeight { 720 };
-const auto fps { 60 };
+const auto g_title { "Space Shootout" };
+const auto g_screenWidth { 960 };
+const auto g_screenHeight { 720 };
+const auto g_fps { 60 };
 
 int main() {
-    InitWindow(screenWidth, screenHeight, title);
-    SetTargetFPS(fps);
+    InitWindow(g_screenWidth, g_screenHeight, g_title);
+    SetTargetFPS(g_fps);
     HideCursor();
 
     StateMachine gameStateMachine {};

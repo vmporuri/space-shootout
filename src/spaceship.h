@@ -3,13 +3,13 @@
 #include "laser.h"
 #include <optional>
 
-const auto shipWidth { 60 };
-const auto shipHeight { 60 };
-const auto shipSpeedX { 10 };
-const auto shipSpeedY { 10 };
-
 class Spaceship {
   private:
+    static constexpr const auto s_shipWidth { 60 };
+    static constexpr const auto s_shipHeight { 60 };
+    static constexpr const auto s_shipSpeedX { 10 };
+    static constexpr const auto s_shipSpeedY { 10 };
+
     int m_posX;
     int m_posY;
 

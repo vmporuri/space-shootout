@@ -5,7 +5,7 @@
 #include "text-screen.h"
 #include <memory>
 
-LoadingScreen::LoadingScreen() : TextScreen { g_loadingText } {}
+LoadingScreen::LoadingScreen() : TextScreen { s_loadingText } {}
 
 std::unique_ptr<GameState> LoadingScreen::update() {
     if (IsKeyPressed(KEY_SPACE)) {
