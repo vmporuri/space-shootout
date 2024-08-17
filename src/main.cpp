@@ -1,5 +1,5 @@
+#include "game/state-machine.h"
 #include "raylib.h"
-#include "state-machine.h"
 
 const auto g_title { "Space Shootout" };
 const auto g_screenWidth { 960 };
