@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.30.2)
 project(space-shootout CXX)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_BUILD_TYPE Release)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wpedantic")
@@ -17,7 +17,8 @@ add_subdirectory(external/enet)
 target_include_directories(
   ${PROJECT_NAME}
   PUBLIC external/raylib/include
-  PUBLIC external/enet/include)
+  PUBLIC external/enet/include
+  PUBLIC external/raylib/include)
 target_link_directories(${PROJECT_NAME} PRIVATE external/raylib/src)
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_INCLUDE})
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
