@@ -17,8 +17,7 @@ add_subdirectory(external/enet)
 target_include_directories(
   ${PROJECT_NAME}
   PUBLIC external/raylib/include
-  PUBLIC external/enet/include
-  PUBLIC external/raylib/include)
+  PUBLIC external/enet/include)
 target_link_directories(${PROJECT_NAME} PRIVATE external/raylib/src)
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_INCLUDE})
-target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
+target_link_libraries(${PROJECT_NAME} PRIVATE raylib enet)
