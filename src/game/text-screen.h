@@ -12,8 +12,8 @@ class TextScreen : public GameState {
     int m_fontSize;
 
   public:
-    TextScreen(int fontSize) : m_fontSize { fontSize } {}
-    TextScreen(const char *text, int fontSize)
+    TextScreen(int fontSize = s_defaultFontSize) : m_fontSize { fontSize } {}
+    TextScreen(const char *text, int fontSize = s_defaultFontSize)
         : m_text { text }, m_fontSize { fontSize } {}
     void render() override {
         int textWidth { MeasureText(m_text.c_str(), m_fontSize) };
