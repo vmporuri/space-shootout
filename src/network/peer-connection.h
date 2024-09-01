@@ -1,6 +1,7 @@
 #pragma once
 
 #include "enet/enet.h"
+#include "network/peer-message.h"
 #include <cstdlib>
 #include <iostream>
 
@@ -21,8 +22,8 @@ class PeerConnection {
     virtual ~PeerConnection() = default;
 
     virtual bool findPeer();
-    virtual void sendPacket();
-    virtual void checkForNewPackets();
+    virtual void sendPacket(std::string msg);
+    virtual PeerMessage checkForNewPackets();
     virtual void disconnectPeer();
 
     static void initENet() {
