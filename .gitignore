@@ -31,7 +31,11 @@
 *.out
 *.app
 build
+cmake-build-debug
 
 ## Cache clangd
 .cache
 compile_commands.json
+
+## IDE
+.idea
