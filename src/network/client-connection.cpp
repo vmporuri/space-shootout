@@ -17,8 +17,7 @@ bool ClientConnection::findPeer() {
         enet_host_connect(m_client.get(), &peerAddr, s_numPeers, s_bandwidth));
 
     ENetEvent event;
-    while (enet_host_service(m_client.get(), &event,
-                             s_connectionTimeoutLength) > 0) {
+    while (enet_host_service(m_client.get(), &event, 0) > 0) {
         switch (event.type) {
         case ENET_EVENT_TYPE_CONNECT:
             return true;

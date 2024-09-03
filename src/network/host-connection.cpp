@@ -11,13 +11,16 @@ HostConnection::HostConnection() {
     sourceAddr.port = s_defaultPort;
     m_server = std::unique_ptr<ENetHost, ENetHostDeleter>(enet_host_create(
         &sourceAddr, s_numPeers, s_numPeers, s_bandwidth, s_bandwidth));
+    if (!m_server) {
+        std::cerr << "Error initializing ENet server.\n";
+        std::exit(EXIT_FAILURE);
+    }
 }
 
 // Returns true if a peer connects within the connection timeout limit.
 bool HostConnection::findPeer() {
     ENetEvent event;
-    while (enet_host_service(m_server.get(), &event,
-                             s_connectionTimeoutLength) > 0) {
+    while (enet_host_service(m_server.get(), &event, 0) > 0) {
         switch (event.type) {
         case ENET_EVENT_TYPE_CONNECT:
             return true;

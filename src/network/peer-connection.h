@@ -9,7 +9,7 @@ class PeerConnection {
   protected:
     static inline bool s_isENetInitialized { false };
     static constexpr int s_defaultPort { 7777 };
-    static constexpr int s_numPeers { 1 };
+    static constexpr int s_numPeers { 2 };
     static constexpr int s_bandwidth { 0 };
     static constexpr int s_connectionTimeoutLength { 5000 };
 

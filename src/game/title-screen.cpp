@@ -1,14 +1,21 @@
 #include "title-screen.h"
 #include "game/text-screen.h"
 #include "loading-screen.h"
+#include "network/client-connection.h"
+#include "network/host-connection.h"
 #include "raylib.h"
 #include <memory>
 
 TitleScreen::TitleScreen(const GameState &oldState) : TextScreen { oldState } {}
 
 std::unique_ptr<GameState> TitleScreen::update() {
-    if (IsKeyPressed(KEY_H) || IsKeyPressed(KEY_J)) {
-        return std::make_unique<LoadingScreen>();
+    if (IsKeyPressed(KEY_H)) {
+        m_peerConn = std::make_shared<HostConnection>();
+        return std::make_unique<LoadingScreen>(*this);
+    }
+    if (IsKeyPressed(KEY_J)) {
+        m_peerConn = std::make_shared<ClientConnection>();
+        return std::make_unique<LoadingScreen>(*this);
     }
     return nullptr;
 }
