@@ -5,6 +5,7 @@
 #include "raylib.h"
 #include "spaceship.h"
 #include <algorithm>
+#include <iterator>
 #include <memory>
 #include <optional>
 #include <vector>
@@ -55,4 +56,27 @@ void Game::sendOutgoingLasers() {
 }
 
 // Receives the incoming lasers from the peer connection and adds to the Game.
-void Game::updateIncomingLasers() {}
+void Game::updateIncomingLasers() {
+    PeerMessage msg { m_peerConn->checkForNewPackets() };
+    if (msg.isDisconnection()) {
+        return; // TODO: Implement automatic wins after opponent disconnection.
+    }
+    if (!msg.containsMessage()) {
+        return;
+    }
+
+    GameMessage gameMsg { msg.getMessage() };
+    switch (gameMsg.getMessageType()) {
+    case GameMessage::LASERS: {
+        std::vector<Laser> newLasers {};
+        std::transform(gameMsg.getLasers().begin(), gameMsg.getLasers().end(),
+                       std::back_inserter(newLasers), [](int posX) -> Laser {
+                           return { posX, 0, Laser::DOWN };
+                       });
+        m_incomingLasers.insert(m_incomingLasers.end(), newLasers.begin(),
+                                newLasers.end());
+    }
+    case GameMessage::DECLARE_LOSS:
+        return;
+    }
+}

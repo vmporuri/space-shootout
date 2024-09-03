@@ -4,6 +4,8 @@
 GameMessage::GameMessage(MessageType type, std::vector<int> &lasers)
     : m_type { type }, m_lasers { lasers } {}
 
+GameMessage::GameMessage(std::string &msg) : m_type {} { unmarshall(msg); }
+
 [[nodiscard]] GameMessage::MessageType GameMessage::getMessageType() const {
     return m_type;
 }

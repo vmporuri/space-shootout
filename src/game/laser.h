@@ -1,6 +1,9 @@
 #pragma once
 
 class Laser {
+  public:
+    enum LaserDirection { UP = -1, DOWN = 1 };
+
   private:
     static constexpr auto s_laserWidth { 8 };
     static constexpr auto s_laserHeight { 30 };
@@ -8,9 +11,10 @@ class Laser {
 
     int m_posX;
     int m_posY;
+    LaserDirection m_dir;
 
   public:
-    Laser(int posX, int posY);
+    Laser(int posX, int posY, LaserDirection dir = UP);
     [[nodiscard]] int getX() const;
     [[nodiscard]] int getY() const;
     void draw() const;
