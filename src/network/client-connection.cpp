@@ -10,14 +10,16 @@ ClientConnection::ClientConnection()
 // Returns true if able to connect to a peer within the connection timeout
 // limit.
 bool ClientConnection::findPeer() {
-    ENetAddress peerAddr;
-    peerAddr.host = ENET_HOST_BROADCAST;
-    peerAddr.port = s_defaultPort;
-    m_peer = std::unique_ptr<ENetPeer, ENetPeerDeleter>(
-        enet_host_connect(m_client.get(), &peerAddr, s_numPeers, s_bandwidth));
+    if (!m_peer) {
+        ENetAddress peerAddr;
+        peerAddr.host = ENET_HOST_BROADCAST;
+        peerAddr.port = s_defaultPort;
+        m_peer = std::unique_ptr<ENetPeer, ENetPeerDeleter>(enet_host_connect(
+            m_client.get(), &peerAddr, s_numPeers, s_bandwidth));
+    }
 
     ENetEvent event;
-    while (enet_host_service(m_client.get(), &event, 0) > 0) {
+    if (enet_host_service(m_client.get(), &event, 0) > 0) {
         switch (event.type) {
         case ENET_EVENT_TYPE_CONNECT:
             return true;
@@ -25,6 +27,8 @@ bool ClientConnection::findPeer() {
             enet_packet_destroy(event.packet);
             break;
         default:
+            event.peer -> data = nullptr;
+            m_peer = nullptr;
             break;
         }
     }

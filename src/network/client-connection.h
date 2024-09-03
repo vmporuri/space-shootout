@@ -7,8 +7,8 @@
 
 class ClientConnection : public PeerConnection {
   private:
-    std::unique_ptr<ENetPeer, ENetPeerDeleter> m_peer;
     std::unique_ptr<ENetHost, ENetHostDeleter> m_client;
+    std::unique_ptr<ENetPeer, ENetPeerDeleter> m_peer;
 
   public:
     ClientConnection();

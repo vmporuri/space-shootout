@@ -7,11 +7,7 @@ static constexpr auto g_screenWidth { 960 };
 static constexpr auto g_screenHeight { 720 };
 static constexpr auto g_fps { 60 };
 
-int main() {
-    InitWindow(g_screenWidth, g_screenHeight, g_title);
-    SetTargetFPS(g_fps);
-    HideCursor();
-
+void runGameLoop() {
     if (enet_initialize() != 0) {
         std::cerr << "Error initializing ENet library.\n";
         std::exit(EXIT_FAILURE);
@@ -22,5 +18,13 @@ int main() {
     gameStateMachine.runGameLoop();
 
     CloseWindow();
+}
+
+int main() {
+    InitWindow(g_screenWidth, g_screenHeight, g_title);
+    SetTargetFPS(g_fps);
+    HideCursor();
+
+    runGameLoop();
     return 0;
 }
