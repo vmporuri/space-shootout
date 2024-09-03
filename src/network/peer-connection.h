@@ -21,9 +21,9 @@ class PeerConnection {
     PeerConnection &operator=(PeerConnection &&) = delete;
     virtual ~PeerConnection() = default;
 
-    virtual bool findPeer() {}
-    virtual void sendPacket(std::string msg) {}
-    virtual PeerMessage checkForNewPackets() {}
+    virtual bool findPeer() { return true; }
+    virtual void sendPacket([[maybe_unused]] std::string msg) {}
+    virtual PeerMessage checkForNewPackets() { return { NO_MESSAGE }; }
     virtual void disconnectPeer() {}
 
     static void initENet() {

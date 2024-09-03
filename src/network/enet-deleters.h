@@ -21,5 +21,5 @@ class ENetPacketDeleter {
 
 class ENetPacketNonDeleter {
   public:
-    void operator()(ENetPacket *packetPtr) const {}
+    void operator()([[maybe_unused]] ENetPacket *packetPtr) const {}
 };
