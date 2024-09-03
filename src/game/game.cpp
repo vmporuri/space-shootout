@@ -1,18 +1,25 @@
 #include "game.h"
 #include "game-state.h"
+#include "game/game-message.h"
 #include "laser.h"
 #include "raylib.h"
 #include "spaceship.h"
+#include <algorithm>
 #include <memory>
 #include <optional>
 #include <vector>
 
+// The basic Game constructor.
 Game::Game() : m_player { GetScreenWidth() / 2, GetScreenHeight() / 2 } {}
 
+// Creates a Game object using a GameState object.
+// This is typically used in the context of state transitions in the state
+// machine.
 Game::Game(const GameState &oldState)
     : GameState { oldState },
       m_player { GetScreenWidth() / 2, GetScreenHeight() / 2 } {}
 
+// Updates the Game's state by one tick.
 std::unique_ptr<GameState> Game::update() {
     m_player.move();
     std::optional<Laser> blast { m_player.blast() };
@@ -22,6 +29,7 @@ std::unique_ptr<GameState> Game::update() {
     return std::unique_ptr<GameState> {};
 }
 
+// Renders the Game screen.
 void Game::render() {
     m_player.draw();
     for (auto &laser : m_outgoingLasers) {
@@ -29,3 +37,22 @@ void Game::render() {
         laser.draw();
     }
 }
+
+// Sends the lasers that have gone off screen to the peer connection.
+void Game::sendOutgoingLasers() {
+    std::vector<int> exitingLasers {};
+    m_outgoingLasers.erase(
+        std::remove_if(m_outgoingLasers.begin(), m_outgoingLasers.end(),
+                       [&exitingLasers](Laser laser) {
+                           if (laser.isOffScreen()) {
+                               exitingLasers.push_back(laser.getX());
+                           }
+                           return laser.isOffScreen();
+                       }),
+        m_outgoingLasers.end());
+    GameMessage gameMsg { GameMessage::LASERS, exitingLasers };
+    m_peerConn->sendPacket(gameMsg.marshall());
+}
+
+// Receives the incoming lasers from the peer connection and adds to the Game.
+void Game::updateIncomingLasers() {}

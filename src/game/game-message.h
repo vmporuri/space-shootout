@@ -6,7 +6,7 @@
 class GameMessage {
 
   public:
-    enum MessageType { INCOMING_LASERS = 0, DECLARE_LOSS = 1 };
+    enum MessageType { LASERS = 0, DECLARE_LOSS = 1 };
 
   private:
     constexpr static auto s_messageField { "messageType" };

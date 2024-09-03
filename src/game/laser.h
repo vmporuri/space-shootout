@@ -11,6 +11,8 @@ class Laser {
 
   public:
     Laser(int posX, int posY);
+    [[nodiscard]] int getX() const;
+    [[nodiscard]] int getY() const;
     void draw() const;
     void move();
     [[nodiscard]] bool isOffScreen() const;
