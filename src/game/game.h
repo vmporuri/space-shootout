@@ -13,6 +13,7 @@ class Game : public GameState {
 
   public:
     Game();
+    Game(const GameState &);
     std::unique_ptr<GameState> update() override;
     void render() override;
 };

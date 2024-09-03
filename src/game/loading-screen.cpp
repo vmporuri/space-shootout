@@ -7,9 +7,12 @@
 
 LoadingScreen::LoadingScreen() : TextScreen { s_loadingText } {}
 
+LoadingScreen::LoadingScreen(GameState &oldState)
+    : TextScreen(oldState, s_loadingText) {}
+
 std::unique_ptr<GameState> LoadingScreen::update() {
     if (IsKeyPressed(KEY_SPACE)) {
         return std::make_unique<Game>();
     }
-    return std::unique_ptr<GameState> {};
+    return nullptr;
 }

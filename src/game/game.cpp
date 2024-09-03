@@ -9,6 +9,10 @@
 
 Game::Game() : m_player { GetScreenWidth() / 2, GetScreenHeight() / 2 } {}
 
+Game::Game(const GameState &oldState)
+    : GameState { oldState },
+      m_player { GetScreenWidth() / 2, GetScreenHeight() / 2 } {}
+
 std::unique_ptr<GameState> Game::update() {
     m_player.move();
     std::optional<Laser> blast { m_player.blast() };

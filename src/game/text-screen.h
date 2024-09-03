@@ -13,8 +13,13 @@ class TextScreen : public GameState {
 
   public:
     TextScreen(int fontSize = s_defaultFontSize) : m_fontSize { fontSize } {}
+    TextScreen(const GameState &oldState, int fontSize = s_defaultFontSize)
+        : GameState { oldState }, m_fontSize { fontSize } {}
     TextScreen(const char *text, int fontSize = s_defaultFontSize)
         : m_text { text }, m_fontSize { fontSize } {}
+    TextScreen(const GameState &oldState, const char *text,
+               int fontSize = s_defaultFontSize)
+        : GameState { oldState }, m_text { text }, m_fontSize { fontSize } {}
     void render() override {
         int textWidth { MeasureText(m_text.c_str(), m_fontSize) };
         DrawText(m_text.c_str(), (GetScreenWidth() - textWidth) / 2,

@@ -9,5 +9,6 @@ class LoadingScreen : public TextScreen {
 
   public:
     LoadingScreen();
+    LoadingScreen(GameState &);
     std::unique_ptr<GameState> update() override;
 };

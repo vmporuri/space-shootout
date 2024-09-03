@@ -1,8 +1,12 @@
 #pragma once
 
+#include "network/peer-connection.h"
 #include <memory>
 
 class GameState {
+  protected:
+    std::shared_ptr<PeerConnection> m_peerConn;
+
   public:
     GameState() = default;
     GameState(const GameState &) = default;
