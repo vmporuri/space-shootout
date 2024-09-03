@@ -1,6 +1,7 @@
 #pragma once
 
 #include "laser.h"
+#include "raylib.h"
 #include <optional>
 
 class Spaceship {
@@ -15,6 +16,7 @@ class Spaceship {
 
   public:
     Spaceship(int posX, int posY);
+    [[nodiscard]] Rectangle getRectangle() const;
     void draw() const;
     void move();
     [[nodiscard]] std::optional<Laser> blast() const;

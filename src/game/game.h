@@ -23,6 +23,16 @@ class Game : public GameState {
     // the Game.
     void updateIncomingLasers();
 
+    // Clears incoming lasers that have gone off screen.
+    void clearIncomingLasers();
+
+    // Returns true if the game is over and false otherwise.
+    [[nodiscard]] bool checkIfGameOver() const;
+
+    // Returns true if there is a collision between the player and the provided
+    // laser entity and false otherwise.
+    [[nodiscard]] bool checkPlayerCollision(const Laser &laser) const;
+
   public:
     // The basic Game constructor.
     Game();

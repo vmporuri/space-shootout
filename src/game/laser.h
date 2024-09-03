@@ -1,5 +1,7 @@
 #pragma once
 
+#include "raylib.h"
+
 class Laser {
   public:
     enum LaserDirection { UP = -1, DOWN = 1 };
@@ -17,6 +19,7 @@ class Laser {
     Laser(int posX, int posY, LaserDirection dir = UP);
     [[nodiscard]] int getX() const;
     [[nodiscard]] int getY() const;
+    [[nodiscard]] Rectangle getRectangle() const;
     void draw() const;
     void move();
     [[nodiscard]] bool isOffScreen() const;

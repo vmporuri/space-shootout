@@ -10,6 +10,11 @@ void Spaceship::draw() const {
     DrawRectangle(m_posX, m_posY, s_shipWidth, s_shipHeight, WHITE);
 }
 
+[[nodiscard]] Rectangle Spaceship::getRectangle() const {
+    return { static_cast<float>(m_posX), static_cast<float>(m_posY),
+             s_shipWidth, s_shipHeight };
+}
+
 void Spaceship::move() {
     if (IsKeyDown(KEY_W) || IsKeyDown(KEY_UP)) {
         m_posY = std::max(m_posY - s_shipSpeedY, 0);

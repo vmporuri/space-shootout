@@ -27,16 +27,27 @@ std::unique_ptr<GameState> Game::update() {
     if (blast) {
         m_outgoingLasers.push_back(*blast);
     }
-    return std::unique_ptr<GameState> {};
+    std::for_each(m_outgoingLasers.begin(), m_outgoingLasers.end(),
+                  [](Laser &laser) { laser.move(); });
+    sendOutgoingLasers();
+    updateIncomingLasers();
+    std::for_each(m_incomingLasers.begin(), m_incomingLasers.end(),
+                  [](Laser &laser) { laser.move(); });
+    clearIncomingLasers();
+
+    if (checkIfGameOver()) {
+        return nullptr;
+    }
+    return nullptr;
 }
 
 // Renders the Game screen.
 void Game::render() {
     m_player.draw();
-    for (auto &laser : m_outgoingLasers) {
-        laser.move();
-        laser.draw();
-    }
+    std::for_each(m_outgoingLasers.begin(), m_outgoingLasers.end(),
+                  [](Laser &laser) { laser.draw(); });
+    std::for_each(m_incomingLasers.begin(), m_incomingLasers.end(),
+                  [](Laser &laser) { laser.draw(); });
 }
 
 // Sends the lasers that have gone off screen to the peer connection.
@@ -79,4 +90,25 @@ void Game::updateIncomingLasers() {
     case GameMessage::DECLARE_LOSS:
         return;
     }
+}
+
+// Clears incoming lasers that have gone off screen.
+void Game::clearIncomingLasers() {
+    m_incomingLasers.erase(
+        std::remove_if(m_incomingLasers.begin(), m_incomingLasers.end(),
+                       [](const Laser &laser) { return laser.isOffScreen(); }),
+        m_incomingLasers.end());
+}
+
+// Returns true if the game is over and false otherwise.
+bool Game::checkIfGameOver() const {
+    return std::any_of(
+        m_incomingLasers.begin(), m_incomingLasers.end(),
+        [this](const Laser &laser) { return checkPlayerCollision(laser); });
+}
+
+// Returns true if there is a collision between the player and the provided
+// laser entity and false otherwise.
+bool Game::checkPlayerCollision(const Laser &laser) const {
+    return CheckCollisionRecs(m_player.getRectangle(), laser.getRectangle());
 }

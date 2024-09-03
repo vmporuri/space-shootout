@@ -9,6 +9,11 @@ Laser::Laser(int posX, int posY, LaserDirection dir)
 
 [[nodiscard]] int Laser::getY() const { return m_posY; }
 
+[[nodiscard]] Rectangle Laser::getRectangle() const {
+    return { static_cast<float>(m_posX), static_cast<float>(m_posY),
+             s_laserWidth, s_laserHeight };
+}
+
 void Laser::draw() const {
     DrawRectangle(m_posX, m_posY, s_laserWidth, s_laserHeight, WHITE);
 }
