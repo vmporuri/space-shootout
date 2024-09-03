@@ -15,6 +15,8 @@ class Game : public GameState {
     Spaceship m_player;
     std::vector<Laser> m_outgoingLasers;
     std::vector<Laser> m_incomingLasers;
+    bool m_isGameOver;
+    bool m_hasWon;
 
     // Sends the lasers that have gone off screen to the peer connection.
     void sendOutgoingLasers();

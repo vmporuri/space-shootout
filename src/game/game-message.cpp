@@ -1,7 +1,7 @@
 #include "game-message.h"
 #include "nlohmann/json.hpp"
 
-GameMessage::GameMessage(MessageType type, std::vector<int> &lasers)
+GameMessage::GameMessage(MessageType type, const std::vector<int> &lasers)
     : m_type { type }, m_lasers { lasers } {}
 
 GameMessage::GameMessage(const std::string &msg) : m_type {} {

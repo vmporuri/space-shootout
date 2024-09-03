@@ -16,7 +16,7 @@ class GameMessage {
     std::vector<int> m_lasers;
 
   public:
-    GameMessage(MessageType type, std::vector<int> &lasers);
+    GameMessage(MessageType type, const std::vector<int> &lasers);
     GameMessage(const std::string &msg);
     [[nodiscard]] MessageType getMessageType() const;
     [[nodiscard]] std::vector<int> getLasers() const;

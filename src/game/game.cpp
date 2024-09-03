@@ -1,5 +1,6 @@
 #include "game.h"
 #include "game-state.h"
+#include "game/end-screen.h"
 #include "game/game-message.h"
 #include "laser.h"
 #include "raylib.h"
@@ -11,14 +12,17 @@
 #include <vector>
 
 // The basic Game constructor.
-Game::Game() : m_player { GetScreenWidth() / 2, GetScreenHeight() / 2 } {}
+Game::Game()
+    : m_player { GetScreenWidth() / 2, GetScreenHeight() / 2 },
+      m_isGameOver { false }, m_hasWon { false } {}
 
 // Creates a Game object using a GameState object.
 // This is typically used in the context of state transitions in the state
 // machine.
 Game::Game(const GameState &oldState)
     : GameState { oldState },
-      m_player { GetScreenWidth() / 2, GetScreenHeight() / 2 } {}
+      m_player { GetScreenWidth() / 2, GetScreenHeight() / 2 },
+      m_isGameOver { false }, m_hasWon { false } {}
 
 // Updates the Game's state by one tick.
 std::unique_ptr<GameState> Game::update() {
@@ -36,7 +40,9 @@ std::unique_ptr<GameState> Game::update() {
     clearIncomingLasers();
 
     if (checkIfGameOver()) {
-        return nullptr;
+        auto nextState { std::make_unique<EndScreen>(*this) };
+        nextState->setWinStatus(m_hasWon);
+        return nextState;
     }
     return nullptr;
 }
@@ -70,7 +76,9 @@ void Game::sendOutgoingLasers() {
 void Game::updateIncomingLasers() {
     PeerMessage msg { m_peerConn->checkForNewPackets() };
     if (msg.isDisconnection()) {
-        return; // TODO: Implement automatic wins after opponent disconnection.
+        m_isGameOver = true;
+        m_hasWon = true;
+        return;
     }
     if (!msg.containsMessage()) {
         return;
@@ -87,8 +95,11 @@ void Game::updateIncomingLasers() {
         m_incomingLasers.insert(m_incomingLasers.end(), newLasers.begin(),
                                 newLasers.end());
     }
-    case GameMessage::DECLARE_LOSS:
+    case GameMessage::DECLARE_LOSS: {
+        m_isGameOver = true;
+        m_hasWon = true;
         return;
+    }
     }
 }
 
@@ -102,13 +113,19 @@ void Game::clearIncomingLasers() {
 
 // Returns true if the game is over and false otherwise.
 bool Game::checkIfGameOver() const {
-    return std::any_of(
-        m_incomingLasers.begin(), m_incomingLasers.end(),
-        [this](const Laser &laser) { return checkPlayerCollision(laser); });
+    return std::any_of(m_incomingLasers.begin(), m_incomingLasers.end(),
+                       [this](const Laser &laser) {
+                           return m_isGameOver || checkPlayerCollision(laser);
+                       });
 }
 
 // Returns true if there is a collision between the player and the provided
 // laser entity and false otherwise.
 bool Game::checkPlayerCollision(const Laser &laser) const {
-    return CheckCollisionRecs(m_player.getRectangle(), laser.getRectangle());
+    if (CheckCollisionRecs(m_player.getRectangle(), laser.getRectangle())) {
+        GameMessage gameMsg { GameMessage::DECLARE_LOSS, {} };
+        m_peerConn->sendPacket(gameMsg.marshall());
+        return true;
+    }
+    return false;
 }
